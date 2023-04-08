@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tweak_clone/UI/splash_screen.dart';
 import 'package:tweak_clone/models/task.dart';
 
 import 'UI/home_page.dart';
@@ -30,6 +31,6 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
         debugShowCheckedModeBanner: true,
         title: 'Tweak Clone',
-        home: HomePage());
+        home: SplashScreen());
   }
 }
