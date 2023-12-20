@@ -110,9 +110,9 @@ class _TaskDetailsBottomSheetState extends State<TaskDetailsBottomSheet> {
                     margin: const EdgeInsets.only(top: 1, right: 10),
                     child: (MediaQuery.of(context).viewInsets.bottom == 0.0)
                         ? IconButton(
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.close_rounded,
-                              color: secondaryFG,
+                              color: taskSecondaryColors[widget.task.color],
                             ),
                             onPressed: (() => Navigator.of(context).pop()),
                           )
@@ -172,7 +172,7 @@ class _TaskDetailsBottomSheetState extends State<TaskDetailsBottomSheet> {
                   border: InputBorder.none,
                   hintText: "Add some extra notes here",
                   hintStyle:
-                      GoogleFonts.roboto(fontSize: 16, color: secondaryFG),
+                      GoogleFonts.roboto(fontSize: 16, color: taskSecondaryColors[widget.task.color]),
                 ),
               ),
             ),

@@ -47,7 +47,8 @@ class _TaskTileState extends State<TaskTile> {
                       fontSize: 18,
                       backgroundColor: taskColors[widget.task.color],
                       color:
-                          (widget.task.isCompleted) ? secondaryFG : primaryFG,
+                          (widget.task.isCompleted) ? taskSecondaryColors[widget.task.color] : primaryFG,
+                      decorationColor: (widget.task.isCompleted) ? secondaryFG : primaryFG,
                       decoration: (widget.task.isCompleted)
                           ? TextDecoration.lineThrough
                           : TextDecoration.none,

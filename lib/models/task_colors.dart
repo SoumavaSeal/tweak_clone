@@ -7,3 +7,11 @@ List<Color> taskColors = [
   Colors.blue,
   Colors.yellow,
 ];
+
+List<Color> taskSecondaryColors= [
+  secondaryFG,
+  secondaryFG,
+  secondaryFG,
+  const Color(0xFFa69eb0),
+];
+
