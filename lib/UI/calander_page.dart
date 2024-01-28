@@ -1,54 +1,43 @@
+import 'package:calander/calander.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:tweak_clone/UI/calander_page.dart';
 import 'package:tweak_clone/UI/colours.dart';
-import 'package:tweak_clone/models/week_dates.dart';
-import 'package:tweak_clone/widgets/task_list.dart';
+import 'package:tweak_clone/UI/home_page.dart';
 
 import '../widgets/big_text.dart';
 
-class HomePage extends StatefulWidget {
-  final DateTime date;
-  const HomePage({super.key, required this.date});
+class CalanderPage extends StatefulWidget {
+  const CalanderPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<CalanderPage> createState() => _CalanderPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  WeekDates wk = WeekDates();
-  List<DateTime> week = [];
-
-  @override
-  void initState() {
-    week = wk.generateDates(widget.date);
-    super.initState();
-  }
+class _CalanderPageState extends State<CalanderPage> {
+  
+  DateTime date = DateTime.now();
+  int selYear = DateTime.now().year;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: primaryBG,
         appBar: AppBar(
-          automaticallyImplyLeading: false,
           backgroundColor: primaryBG,
           elevation: 0.0,
-          // title: const Header(),
-
-          //TODO: find a way to seperate the contents of the header widget into a differenr file.
-          /* Contents of the Header Widget*/
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // Month and year
               GestureDetector(
-                onTap: () => Navigator.push(
-                    context, 
-                    MaterialPageRoute(builder: (context) => const CalanderPage())
-                ),
+                onTap: (selYear != DateTime.now().year) ? (){
+                    setState(() {
+                        selYear = DateTime.now().year;
+                    });
+                }:null,
                 child: BigText(
-                    text: DateFormat("MMM yyyy").format(DateTime.now()),
+                    text: selYear.toString(),
                     color: primaryFG),
               ),
 
@@ -71,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                                   color: primaryBG,
                                   fontWeight: FontWeight.w400)))),
 
-                  // Previous week Button
+                  // Previous year Button
                   Container(
                       height: 32,
                       width: 32,
@@ -89,12 +78,12 @@ class _HomePageState extends State<HomePage> {
                         iconSize: 20,
                         onPressed: () {
                           setState(() {
-                            week = wk.PrevDates(week[0]);
+                            selYear = selYear - 1;
                           });
                         },
                       )),
 
-                  // Next Week Button
+                  // Next year Button
                   Container(
                       height: 32,
                       width: 32,
@@ -111,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                         iconSize: 20,
                         onPressed: () {
                           setState(() {
-                            week = wk.NextDates(week[0]);
+                            selYear = selYear + 1;
                           });
                         },
                       ))
@@ -121,17 +110,21 @@ class _HomePageState extends State<HomePage> {
           ),
           // */
         ),
-        body: SafeArea(
-          child: Container(
-            margin: const EdgeInsets.only(top: 10, bottom: 10),
-            padding: const EdgeInsets.only(left: 15, right: 15),
-            // child: TaskList(date: week[0], taskList: taskList,),
-            child: ListView.builder(
-                itemCount: 7,
-                itemBuilder: ((context, index) {
-                  return TaskList(date: week[index]);
-                })),
-          ),
-        ));
+        body: Column(
+            children: [
+                const SizedBox(height: 20,),
+                Calander(
+                    focusedDate: date,
+                    year: selYear,
+                    onDaySelect: (DateTime date){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomePage(date: date,))
+                        );
+                    },
+                )
+            ]
+        )
+    );
   }
 }

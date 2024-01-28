@@ -1,9 +1,9 @@
 class WeekDates {
-  List<DateTime> generateDates() {
+  List<DateTime> generateDates(DateTime date) {
     List<DateTime> week = [];
 
     DateTime first =
-        (DateTime.now()).subtract(Duration(days: DateTime.now().weekday - 1));
+        date.subtract(Duration(days: date.weekday - 1));
 
     for (int i = 0; i < 7; i++) {
       week.add(DateTime(first.year, first.month, first.day));
